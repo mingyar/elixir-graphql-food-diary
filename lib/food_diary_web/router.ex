@@ -5,8 +5,11 @@ defmodule FoodDiaryWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", FoodDiaryWeb do
+  scope "/api" do
     pipe_through :api
+
+    forward "/graphql", Absinthe.Plug, schema: FoodDiaryWeb.Schema
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: FoodDiaryWeb.Schema
   end
 
   # Enables LiveDashboard only for development
